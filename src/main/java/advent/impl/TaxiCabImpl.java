@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class TaxiCabImpl implements TaxiCab {
 
-    public static final String RIGHT_TURN = "R";
+    private static final String RIGHT_TURN = "R";
 
-    PuzzleInput puzzleInput;
+    private PuzzleInput puzzleInput;
 
     public TaxiCabImpl(PuzzleInput puzzleInput){
         this.puzzleInput = puzzleInput;

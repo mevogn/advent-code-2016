@@ -26,6 +26,11 @@ public class PuzzleSolverImpl implements PuzzleSolver {
         System.out.println("day 3 part A: " + numPossibleTriangles);
         System.out.println("day 3 part B: " + numPossibleVertTriangles);
 
+        RoomNameDecoder roomNameDecoder = new RoomNameDecoderImpl(puzzleInput);
+        int sectorIDSum = roomNameDecoder.getSumSectorIDs(null, true, "northpoleobject");
+        int sectorID = roomNameDecoder.getSumSectorIDs(null, false, "northpoleobject");
+        System.out.println("day 4 part A: " + sectorIDSum);
+        System.out.println("day 4 part B: " + sectorID);
     }
 
 }
