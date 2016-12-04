@@ -1,10 +1,7 @@
 package advent.impl;
 
 
-import advent.PuzzleInput;
-import advent.PuzzleSolver;
-import advent.Security;
-import advent.TaxiCab;
+import advent.*;
 
 public class PuzzleSolverImpl implements PuzzleSolver {
 
@@ -22,6 +19,13 @@ public class PuzzleSolverImpl implements PuzzleSolver {
         String securityCode2 = security.getRealBathroomCode(null);
         System.out.println("day 2 part A: " + securityCode);
         System.out.println("day 2 part B: " + securityCode2);
+
+        Triangles triangles = new TrianglesImpl(puzzleInput);
+        int numPossibleTriangles = triangles.numberPossibleTriangles(null, true);
+        int numPossibleVertTriangles = triangles.numberPossibleTriangles(null, false);
+        System.out.println("day 3 part A: " + numPossibleTriangles);
+        System.out.println("day 3 part B: " + numPossibleVertTriangles);
+
     }
 
 }
