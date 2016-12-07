@@ -32,11 +32,17 @@ public class PuzzleSolverImpl implements PuzzleSolver {
 //        System.out.println("day 4 part A: " + sectorIDSum);
 //        System.out.println("day 4 part B: " + sectorID);
 
-        DoorIDDecoder doorIDDecoder = new DoorIDDecoderImpl();
-        String password = doorIDDecoder.getDoorPassword("ugkcyxxp", true);
-        String secondPassword = doorIDDecoder.getDoorPassword("ugkcyxxp", false);
-        System.out.println("day 5 part A: " + password);
-        System.out.println("day 5 part B: " + secondPassword);
+//        DoorIDDecoder doorIDDecoder = new DoorIDDecoderImpl();
+//        String password = doorIDDecoder.getDoorPassword("ugkcyxxp", true);
+//        String secondPassword = doorIDDecoder.getDoorPassword("ugkcyxxp", false);
+//        System.out.println("day 5 part A: " + password);
+//        System.out.println("day 5 part B: " + secondPassword);
+
+        MessageCorrector messageCorrector = new MessageCorrectorImpl(puzzleInput);
+        String message = messageCorrector.getMostCommon(null, true);
+        String secondMessage = messageCorrector.getMostCommon(null, false);
+        System.out.println("day 6 part A: " + message);
+        System.out.println("day 6 part B: " + secondMessage);
     }
 
 }
