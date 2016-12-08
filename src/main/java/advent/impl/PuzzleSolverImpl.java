@@ -38,11 +38,17 @@ public class PuzzleSolverImpl implements PuzzleSolver {
 //        System.out.println("day 5 part A: " + password);
 //        System.out.println("day 5 part B: " + secondPassword);
 
-        MessageCorrector messageCorrector = new MessageCorrectorImpl(puzzleInput);
-        String message = messageCorrector.getMostCommon(null, true);
-        String secondMessage = messageCorrector.getMostCommon(null, false);
-        System.out.println("day 6 part A: " + message);
-        System.out.println("day 6 part B: " + secondMessage);
+//        MessageCorrector messageCorrector = new MessageCorrectorImpl(puzzleInput);
+//        String message = messageCorrector.getMostCommon(null, true);
+//        String secondMessage = messageCorrector.getMostCommon(null, false);
+//        System.out.println("day 6 part A: " + message);
+//        System.out.println("day 6 part B: " + secondMessage);
+
+        InternetProtocolChecker internetProtocolChecker = new InternetProtocolCheckerImpl(puzzleInput);
+        int numMatches = internetProtocolChecker.getNumberIPs(null);
+        int secondPart = internetProtocolChecker.getNumberAbas(null);
+        System.out.println("day 7 part A: " + numMatches);
+        System.out.println("day 7 part B: " + secondPart);
     }
 
 }
