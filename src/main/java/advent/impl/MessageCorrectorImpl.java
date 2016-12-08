@@ -20,11 +20,8 @@ public class MessageCorrectorImpl implements MessageCorrector{
         int singalSize = messageSignals.size();
         int lengthOfStrings = messageSignals.get(0).length();
         int[][] currentMaximums = new int[2][lengthOfStrings];
-        int[] currentMinimums = new int[] {
-                singalSize, singalSize, singalSize, singalSize, singalSize, singalSize, singalSize, singalSize
-        };
         HashMap<String, int[]> letterCounter = initializeHashMap();
-        for (int i =0; i<messageSignals.size(); ++i) {
+        for (int i =0; i<singalSize; ++i) {
             for (int j = 0; j<lengthOfStrings; ++ j) {
                 String currentLetter = String.valueOf(messageSignals.get(i).charAt(j));
                 int[] valueWrapper = letterCounter.get(currentLetter);
@@ -33,30 +30,45 @@ public class MessageCorrectorImpl implements MessageCorrector{
                     currentMaximums[1][j] = valueWrapper[j];
                     currentMaximums[0][j] = (int) messageSignals.get(i).charAt(j);
                 }
-                if (currentMinimums[j] >= valueWrapper[j]){
-                    currentMinimums[j] = valueWrapper[j];
-                }
             }
         }
 
         if (isPartA) {
             return getFinalMessage(currentMaximums, lengthOfStrings);
         } else {
-            return getLeastCommon(letterCounter, lengthOfStrings, currentMinimums); //todo
+            int[] currentMinimums = getMinimums(letterCounter, lengthOfStrings, singalSize);
+            return getLeastCommon(letterCounter, lengthOfStrings, currentMinimums);
         }
     }
 
-    public String getLeastCommon(HashMap<String, int[]> letterCounter, int lengthOfStrings, int[] minimums){
+    private String getLeastCommon(HashMap<String, int[]> letterCounter, int lengthOfStrings, int[] minimums){
         String message = "";
         for (int i = 0; i<lengthOfStrings; ++i){
-           for (int j = 97; j<122; ++j) {
+           for (int j = 97; j<=122; ++j) {
                int[] counts = letterCounter.get(String.valueOf((char)j));
                if (counts[i] == minimums[i]){
                    message = message + ((char) j);
+                   break;
                }
            }
        }
        return message;
+    }
+
+    private int[] getMinimums(HashMap<String, int[]> letterCounter, int lengthOfStrings, int numRows) {
+        int[] currentMinimums = new int[] {
+                numRows, numRows, numRows, numRows, numRows, numRows, numRows, numRows
+        };
+        for (int i = 0; i<lengthOfStrings; ++i){
+            for (int j = 97; j<=122; ++j) {
+                int[] counts = letterCounter.get(String.valueOf((char)j));
+                if (counts[i] <= currentMinimums[i]){
+                    currentMinimums[i] = counts[i];
+                }
+            }
+        }
+
+        return currentMinimums;
     }
 
     private HashMap<String, int[]> initializeHashMap(){
