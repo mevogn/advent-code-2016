@@ -3,6 +3,8 @@ package advent.impl;
 
 import advent.*;
 
+import java.awt.image.PixelInterleavedSampleModel;
+
 public class PuzzleSolverImpl implements PuzzleSolver {
 
     public static void main(String[] args) {
@@ -49,6 +51,12 @@ public class PuzzleSolverImpl implements PuzzleSolver {
         int secondPart = internetProtocolChecker.getNumberAbas(null);
         System.out.println("day 7 part A: " + numMatches);
         System.out.println("day 7 part B: " + secondPart);
+
+        PixelLighter pixelLighter = new PixelLighterImpl(puzzleInput);
+        int numberLit = pixelLighter.numberPixelsLit(null);
+//        int secondPart = internetProtocolChecker.getNumberAbas(null);
+        System.out.println("day 8 part A: " + numberLit);
+//        System.out.println("day 7 part B: " + secondPart);
     }
 
 }
