@@ -46,17 +46,21 @@ public class PuzzleSolverImpl implements PuzzleSolver {
 //        System.out.println("day 6 part A: " + message);
 //        System.out.println("day 6 part B: " + secondMessage);
 
-        InternetProtocolChecker internetProtocolChecker = new InternetProtocolCheckerImpl(puzzleInput);
-        int numMatches = internetProtocolChecker.getNumberIPs(null);
-        int secondPart = internetProtocolChecker.getNumberAbas(null);
-        System.out.println("day 7 part A: " + numMatches);
-        System.out.println("day 7 part B: " + secondPart);
-
-        PixelLighter pixelLighter = new PixelLighterImpl(puzzleInput);
-        int numberLit = pixelLighter.numberPixelsLit(null);
+//        InternetProtocolChecker internetProtocolChecker = new InternetProtocolCheckerImpl(puzzleInput);
+//        int numMatches = internetProtocolChecker.getNumberIPs(null);
 //        int secondPart = internetProtocolChecker.getNumberAbas(null);
-        System.out.println("day 8 part A: " + numberLit);
+//        System.out.println("day 7 part A: " + numMatches);
 //        System.out.println("day 7 part B: " + secondPart);
+
+//        PixelLighter pixelLighter = new PixelLighterImpl(puzzleInput);
+//        int numberLit = pixelLighter.numberPixelsLit(null);
+//        System.out.println("day 8 part A: " + numberLit);
+
+        BalanceBots balanceBots = new BalanceBotsImpl(puzzleInput);
+        int botNumber = balanceBots.botNumber(null, true);
+        int multiplied = balanceBots.botNumber(null, false);
+        System.out.println("day 10 part A: " + botNumber);
+        System.out.println("day 10 part B: " + multiplied);
     }
 
 }
