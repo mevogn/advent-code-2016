@@ -7,4 +7,6 @@ public interface PuzzleInput {
     String[] getSingleLineFileAsStrings(String fileName, String delimiter);
 
     List<String> getMultiLineFileAsStrings(String fileName);
+
+    String getMultiLineFileAsString(String fileName);
 }

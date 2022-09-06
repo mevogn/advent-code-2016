@@ -2,6 +2,7 @@ package advent.impl;
 
 
 import advent.PuzzleInput;
+import org.apache.ivy.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,6 +39,24 @@ public class PuzzleInputImpl implements PuzzleInput {
             }
             br.close();
             return lines;
+        } catch (IOException e) {
+            System.out.println("Error");
+            return null;
+        }
+    }
+
+    public String getMultiLineFileAsString(String fileName) {
+        String filePath = "C:\\Users\\Maria\\IdeaProjects\\AdventOfCode2016\\src\\main\\resources\\" + fileName + ".txt";
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(filePath));
+            String finalLine = "";
+            String line;
+            while ((line = br.readLine()) != null) {
+                finalLine = finalLine + line;
+            }
+            br.close();
+            return finalLine;
         } catch (IOException e) {
             System.out.println("Error");
             return null;

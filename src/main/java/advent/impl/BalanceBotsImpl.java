@@ -3,7 +3,7 @@ package advent.impl;
 import advent.BalanceBots;
 import advent.PuzzleInput;
 
-import java.util.List;
+import java.util.*;
 
 public class BalanceBotsImpl implements BalanceBots {
     private PuzzleInput puzzleInput;
@@ -101,5 +101,197 @@ public class BalanceBotsImpl implements BalanceBots {
             pending[botGiving] = instruction;
         }
         return botNumber;
+    }
+
+    public int getSolution(int[] A) {
+       int numberMoments = 0;
+       Map<Integer, LightBulb> lightBulbMap = new HashMap<Integer, LightBulb>();
+
+       List<Integer> list = new ArrayList<Integer>();
+       for (int i : A) {
+           list.add(i);
+       }
+
+       //loop to track moments
+       for (int i= 0; i < A.length; ++i) {
+           //check in this moment how many lights shine
+           int numberShiningLights = 0;
+           int numberOnLights = 0;
+           LightBulb lightBulb = new LightBulb();
+           lightBulb.setIsOn(true);
+           lightBulbMap.put(A[i], lightBulb);
+           for (int j =0; j < A.length -1; ++j) {
+               //is J on at this point?
+               //is J shining at this point?
+               if (lightBulbMap.get(A[j]) == null) {
+                   LightBulb newLightBulb = new LightBulb();
+                   if (j <= i) {
+                       newLightBulb.setIsOn(true);
+                       if (isShining(list, A[j], i)) {
+                           newLightBulb.setIsShining(true);
+                           numberShiningLights++;
+                       }
+                       numberOnLights++;
+                   }
+               } else {
+                   LightBulb currentLightBulb = lightBulbMap.get(A[j]);
+                   if (currentLightBulb.isOn && currentLightBulb.isShining) {
+                       numberShiningLights++;
+                       numberOnLights++;
+                   } else if (currentLightBulb.isOn) {
+                       boolean isNowShining = isShining(list, A[j], i);
+                       if (isNowShining) {
+                           currentLightBulb.setIsShining(true);
+                           numberShiningLights++;
+                       }
+                       numberOnLights++;
+                   }
+               }
+           }
+           if (numberShiningLights == numberOnLights) {
+               numberMoments++;
+           }
+        }
+
+        return numberMoments;
+    }
+
+    //check array if all previous lightbulbs before this index
+    private boolean isShining(List<Integer> lights, int lightBulbNumber, int currentIndex) {
+        boolean isLightAbleToShine = false;
+
+        //all these lights must be accounted for
+        for (int i = 1; i<=lightBulbNumber; ++i) {
+            if (lights.indexOf((i)) > currentIndex) {
+                isLightAbleToShine = false;
+                break;
+            }
+            isLightAbleToShine = true;
+        }
+        return isLightAbleToShine;
+    }
+
+    private class LightBulb {
+        boolean isOn = false;
+        boolean isShining = false;
+
+        LightBulb(){
+
+        }
+
+        private void setIsOn(boolean isOn) {
+            this.isOn = isOn;
+        }
+
+        private void setIsShining(boolean isShining) {
+            this.isShining = isShining;
+        }
+    }
+
+    public int getOtherSolution(int[] A, int K, int L) {
+        if (K + L > A.length) {
+            return -1;
+        }
+        int maximumApples = 0;
+        int biggestForK = 0;
+        int biggestForL = 0;
+
+        int indexOfK = 0;
+        int indexOfL = 0;
+        //find sequence for K
+        for (int i=0; i<=A.length - K; ++i) {
+            int kSum = 0;
+            for (int j= 0; j< K; j++) {
+                kSum = kSum + A[i+j];
+            }
+            if (kSum > biggestForK) {
+                biggestForK = kSum;
+                indexOfK = i;
+            }
+        }
+
+        for (int i = 0; i<= A.length - L; ++i) {
+            int lSum = 0;
+            for (int j=0; j< L; ++j) {
+                lSum = lSum + A[i+j];
+            }
+            if (lSum > biggestForL) {
+                biggestForL = lSum;
+                indexOfL = i;
+            }
+        }
+
+        if (indexOfK + K - 1 < indexOfL) {
+            maximumApples = biggestForK + biggestForL;
+        } else if (indexOfL + L -1 < indexOfK) {
+            maximumApples = biggestForK + biggestForL;
+        }
+
+        return maximumApples;
+    }
+
+    public int getOtherSolution2(int[] A, int K, int L) {
+        if (K + L > A.length) {
+            return -1;
+        }
+        int maximumApples = 0;
+        AppleSequence kSequence = getBiggestSum(A, K);
+        AppleSequence lSequence = getBiggestSum(A, L);
+
+        if (kSequence.getStartingIndex() + K - 1 < lSequence.getStartingIndex()) {
+            maximumApples = kSequence.getNumberApples() + lSequence.getNumberApples();
+        } else if (lSequence.getStartingIndex() + L -1 < kSequence.getStartingIndex()) {
+            maximumApples = kSequence.getNumberApples() + lSequence.getNumberApples();
+        } else {
+            //overlap exists
+        }
+
+        return maximumApples;
+    }
+
+    private AppleSequence getBiggestSum(int[] A, int numberConsecutive) {
+        AppleSequence appleSequence = new AppleSequence();
+        int biggest = 0;
+        int index = 0;
+        for (int i = 0; i<= A.length - numberConsecutive; ++i) {
+            int lSum = 0;
+            for (int j=0; j< numberConsecutive; ++j) {
+                lSum = lSum + A[i+j];
+            }
+            if (lSum > biggest) {
+                biggest = lSum;
+                index = i;
+            }
+        }
+
+        appleSequence.setNumberApples(biggest);
+        appleSequence.setStartingIndex(index);
+        return appleSequence;
+    }
+
+    private class AppleSequence{
+        int numberApples;
+        int startingIndex;
+
+        AppleSequence() {
+            numberApples = 0;
+            startingIndex = 0;
+        }
+
+        private void setNumberApples(int num) {
+            numberApples = num;
+        }
+
+        private void setStartingIndex(int index) {
+            startingIndex = index;
+        }
+
+        private int getNumberApples() {
+            return numberApples;
+        }
+
+        private int getStartingIndex() {
+            return startingIndex;
+        }
     }
 }

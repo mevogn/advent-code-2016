@@ -4,7 +4,6 @@ import advent.DoorIDDecoder;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import javax.xml.bind.DatatypeConverter;
 import java.security.NoSuchAlgorithmException;
 
 public class DoorIDDecoderImpl implements DoorIDDecoder {
@@ -22,7 +21,7 @@ public class DoorIDDecoderImpl implements DoorIDDecoder {
                     String newInput = input + i.toString();
                     md.update(newInput.getBytes());
                     byte[] digest = md.digest();
-                    String hex = DatatypeConverter.printHexBinary(digest);
+                    String hex = "";
                     if (hex.startsWith("00000")){
                         found = true;
                         if (isPartA) {
